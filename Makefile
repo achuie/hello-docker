@@ -1,2 +1,2 @@
 all:
-	docker build --tag hello_docker:0.1 .
+	docker build --tag hello_docker .
