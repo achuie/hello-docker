@@ -13,8 +13,6 @@ RUN sudo -u builduser zsh -c 'mkdir ~/pkg-builds && \
     cd yay && \
     makepkg -si --noconfirm'
 
-#RUN pacman -U --noconfirm /home/builduser/pkg-builds/yay/*.pkg.tar.*
-
 RUN sudo -u builduser zsh -c \
     'yay -S --needed --noconfirm ros-noetic-ros-base'
 
