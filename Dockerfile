@@ -1,8 +1,10 @@
 FROM archlinux:latest
 
-RUN pacman -Syu --needed --noconfirm base-devel zsh git
+RUN pacman -Syu --needed --noconfirm base-devel zsh git reflector && \
+    reflector --verbose --latest 40 --number 10 --sort rate --protocol http \
+    --save /etc/pacman.d/mirrorlist
 
-RUN useradd builduser -m && \
+RUN useradd -m builduser && \
     passwd -d builduser
 
 RUN printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
@@ -26,5 +28,7 @@ RUN git clone https://www.github.com/achuie/dotfiles.git && \
     cp -r /dotfiles/.zsh/prompts /etc/zsh/prompts && \
     mkdir /etc/zsh/functions && \
     ln -s /etc/zsh/prompts/achuie.zsh /etc/zsh/functions/prompt_achuie_setup
+
+RUN userdel -r builduser
 
 CMD ["/usr/bin/zsh"]
