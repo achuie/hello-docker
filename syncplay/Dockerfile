@@ -1,8 +1,10 @@
 FROM archlinux:latest
 
-RUN pacman -Syu --needed --noconfirm base-devel zsh git reflector mpv youtube-dl && \
+RUN pacman -Syu --needed --noconfirm reflector && \
     reflector --verbose --latest 40 --number 10 --sort rate --protocol http \
     --save /etc/pacman.d/mirrorlist
+
+RUN pacman -S --needed --noconfirm base-devel zsh git mpv youtube-dl
 
 RUN useradd -m builduser && \
     passwd -d builduser
